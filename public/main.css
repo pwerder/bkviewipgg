@@ -5,8 +5,13 @@
     box-sizing: border-box;
 }
 
+body, html {
+    width: 100%;
+    height: 100%;
+}
+
 body {
-    background: #000 url('../img/ipgg.png') no-repeat;
+    background: #000 url('./img/ipgg.png') no-repeat;
     background-size: cover;
     min-height: 100%;
 }
@@ -16,17 +21,12 @@ body, input, button {
     font-size: 14px;
 }
 
-.formulario {
+form {
     background-color: rgb(238, 238, 238);
-    width: 260px;
+    width: 380px;
 }
 
-.botao {
+button {
     cursor: pointer;
-}
-
-.view-tarefa {
-    background-color: black;
-    width: 300px;
-    height: 100px;
+    float: right;
 }
