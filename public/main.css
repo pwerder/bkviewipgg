@@ -1,29 +1,32 @@
-body {
+* {
     margin: 0;
     padding: 0;
-    font-family: Helvetica, Arial, sans-serif;
-    background-color: #cac6ff;
+    outline: 0;
+    box-sizing: border-box;
 }
 
-.caixaCentral {
-    width: 400px;
-    margin: 10px auto;
-    padding-left: 10px;
-    background-color: #ABBEFF;
+body {
+    background: #000 url('../img/ipgg.png') no-repeat;
+    background-size: cover;
+    min-height: 100%;
 }
 
-.caixaInterior {
-    width: 350px;
-    margin: 10px;
-    padding: 10px;
-    background-color: rgb(164, 183, 248);
+body, input, button {
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    font-size: 14px;
 }
-.pbkf{
-    margin-bottom: 0px;
+
+.formulario {
+    background-color: rgb(238, 238, 238);
+    width: 260px;
 }
-.caixaTipoBKF {
-    width: 330px;
-    padding-top: 0px;
-    padding-left: 10px ;
-    background-color: rgb(191, 205, 248);
+
+.botao {
+    cursor: pointer;
+}
+
+.view-tarefa {
+    background-color: black;
+    width: 300px;
+    height: 100px;
 }
