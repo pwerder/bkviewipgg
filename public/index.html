@@ -10,28 +10,34 @@
     
     <body>
 
-        <form action="">
-            <h1>Configuração inicial</h1>
-            <p>Nome da tarefa:</p>
-            <input type="text" name="" id="" placeholder="Digite o nome da sua tarefa">
-            
-            <h2>Configuração gerais</h2>
-            
-            <h3>Grupo</h3>
-
-            <select name="" id="">
-                <option value="">(Sem grupo)</option>
-            </select>
-            <input type="checkbox" name="" id="">Habilitado
-            
-            <h3>Tipo de Backup</h3>
-            <input type="radio" name="tipo" id="">Completo
-            <input type="radio" name="tipo" id="">Inclemntal
-            <input type="radio" name="tipo" id="">Diferencial
-            <input type="radio" name="tipo" id="">Fantasma
-            
-            <button>Enviar</button>               
-        </form>
+        <div class="box">
+            <form action="">
+                <h1>Configuração inicial</h1>
+                
+                <div class="borda">
+                    <p>Nome da tarefa:</p>
+                    <input type="text" name="" id="" placeholder="Digite o nome da sua tarefa">
+                    
+                    <h2>Configurações gerais</h2>
+                    
+                    <h3>Grupo</h3>
+                    
+                    <select name="" id="">
+                        <option value="">(Sem grupo)</option>
+                    </select>
+                    <input type="checkbox" name="" id="">Habilitado
+                    
+                    <h3>Tipo de Backup</h3>
+                    <input type="radio" name="tipo" id="" class="radio">Completo
+                    <input type="radio" name="tipo" id="" class="radio">Incremental
+                    <br>
+                    <input type="radio" name="tipo" id="" class="radio">Diferencial
+                    <input type="radio" name="tipo" id="" class="radio">Fantasma
+                </div>
+                    
+                <button>Enviar</button>               
+            </form>
+        </div>
        
 
     </body>
