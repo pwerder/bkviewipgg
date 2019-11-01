@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;    
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
 }
 
 body, html {
@@ -16,33 +17,52 @@ body {
     background-size: cover; 
 }
 
-body, input, button {
-    font-family: 'Roboto', Arial, Helvetica, sans-serif;
-    font-size: 14px;
-}
-
-h1, h2, h3, p, input {
-    margin: 2px;
-}
-
-form h3 {
-    margin: 4px;
-}
-
-
 form {
     background-color: rgba(255, 255, 255, 0.671);
     border-radius: 20px;
     position:absolute;
-    top:30%;
-    left:30%;
-    right: 30%;
-    bottom: 30%;
-    padding: 10px;
+    margin: 0 2%;
+    top:15%;
+    left:29%;
+    right: 29%;
+    bottom: 15%;
+    padding: 1% 2%;
 }
 
 form h1 {
     text-align: center;
+    font-size: 150%;
+}
+
+form input {
+    width: 97%;
+    height: 7%;
+}
+
+.form-agendamento {
+    padding: 10px;
+    border: 5px dotted #5ab4f0;
+}
+
+.mes {
+    border: 1px solid #5ab4f0;
+    margin-bottom: 10px;
+    padding: 1px;
+}
+
+.semana{
+    border: 1px solid #5ab4f0;
+    padding: 1px;
+    margin-bottom: 10px;
+}
+
+.form-agendamento input {
+    width: 0;
+}
+
+.data-hora input{
+    margin: 1% 0;
+    width: 100%;
 }
 
 button {
@@ -56,14 +76,4 @@ button {
     color: rgb(255, 255, 255);
     cursor: pointer;
     margin-top: 10px;
-}
-
-.borda {
-    border: #5ab4f0 dotted 5px;
-    width: 40%;
-    padding: 6px;
-}
-
-.radio {
-    margin: 2px;
 }

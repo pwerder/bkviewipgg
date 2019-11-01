@@ -9,36 +9,44 @@
     </head>
     
     <body>
-
-        <div class="box">
-            <form action="">
-                <h1>Configuração inicial</h1>
-                
-                <div class="borda">
-                    <p>Nome da tarefa:</p>
-                    <input type="text" name="" id="" placeholder="Digite o nome da sua tarefa">
-                    
-                    <h2>Configurações gerais</h2>
-                    
-                    <h3>Grupo</h3>
-                    
-                    <select name="" id="">
-                        <option value="">(Sem grupo)</option>
-                    </select>
-                    <input type="checkbox" name="" id="">Habilitado
-                    
-                    <h3>Tipo de Backup</h3>
-                    <input type="radio" name="tipo" id="" class="radio">Completo
-                    <input type="radio" name="tipo" id="" class="radio">Incremental
-                    <br>
-                    <input type="radio" name="tipo" id="" class="radio">Diferencial
-                    <input type="radio" name="tipo" id="" class="radio">Fantasma
+        <form action="">
+            <h1>Cadastramento da Rotina de Backup</h1>
+            <p>Nome da tarefa:</p>
+            <input type="text" name="" id="" placeholder="Digite o nome da sua tarefa">
+            
+            <p>Origem</p>
+            <input type="text" placeholder="Pasta para fazer o Backup">
+            
+            <p>Destino</p>
+            <input type="text" placeholder="Destino do Backup">
+            
+            <p>Agendamento</p>
+            <div class="form-agendamento">
+                Nos
+                <div class="mes">
+                    <input type="checkbox" name="" id=""> Primeiro
+                    <input type="checkbox" name="" id=""> Segundo
+                    <input type="checkbox" name="" id=""> Terceiro
+                    <input type="checkbox" name="" id=""> Quarto
+                    <input type="checkbox" name="" id=""> Ultimo
                 </div>
-                    
-                <button>Enviar</button>               
-            </form>
-        </div>
-       
+                Semana
+                <div class="semana">
+                    <input type="checkbox" name="" id=""> Domingo
+                    <input type="checkbox" name="" id=""> Segunda
+                    <input type="checkbox" name="" id=""> Terça
+                    <input type="checkbox" name="" id=""> Quarta
+                    <input type="checkbox" name="" id=""> Quinta
+                    <input type="checkbox" name="" id=""> Sexta
+                    <input type="checkbox" name="" id=""> Sábado
+                </div>
+                <div class="data-hora">
+                    <input type="date" name="" id="">
+                    <input type="time" name="" id="">
+                </div>                
+            </div>
 
+            <button>Salvar</button>
+        </form>
     </body>
 </html>
