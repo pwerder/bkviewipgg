@@ -4,49 +4,25 @@
         <meta charset="UTF-8">
         <title>Backup do IPGG</title>
         <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="main.css">
-        
+        <link rel="stylesheet" href="main.css">   
     </head>
     
     <body>
-        <form action="">
+        <form id="app">
             <h1>Cadastramento da Rotina de Backup</h1>
             <p>Nome da tarefa:</p>
-            <input type="text" name="" id="" placeholder="Digite o nome da sua tarefa">
+            <input type="text" name="" id="nome" placeholder="Digite o nome da sua tarefa">
             
             <p>Origem</p>
-            <input type="text" placeholder="Pasta para fazer o Backup">
+            <input type="text" id="origem" placeholder="Pasta para fazer o Backup">
             
             <p>Destino</p>
-            <input type="text" placeholder="Destino do Backup">
+            <input type="text" id="destino" placeholder="Destino do Backup">
             
-            <p>Agendamento</p>
-            <div class="form-agendamento">
-                Nos
-                <div class="mes">
-                    <input type="checkbox" name="" id=""> Primeiro
-                    <input type="checkbox" name="" id=""> Segundo
-                    <input type="checkbox" name="" id=""> Terceiro
-                    <input type="checkbox" name="" id=""> Quarto
-                    <input type="checkbox" name="" id=""> Ultimo
-                </div>
-                Semana
-                <div class="semana">
-                    <input type="checkbox" name="" id=""> Domingo
-                    <input type="checkbox" name="" id=""> Segunda
-                    <input type="checkbox" name="" id=""> Terça
-                    <input type="checkbox" name="" id=""> Quarta
-                    <input type="checkbox" name="" id=""> Quinta
-                    <input type="checkbox" name="" id=""> Sexta
-                    <input type="checkbox" name="" id=""> Sábado
-                </div>
-                <div class="data-hora">
-                    <input type="date" name="" id="">
-                    <input type="time" name="" id="">
-                </div>                
-            </div>
 
+            
             <button>Salvar</button>
         </form>
+        <script src="app.js"></script>
     </body>
 </html>
