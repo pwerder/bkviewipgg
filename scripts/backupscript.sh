@@ -8,7 +8,8 @@
 # so, runs rsync in the mounted origem to mounted de destino
 
 nomeDaTarefa=$1
-
+nomeDaTarefaFounded=-1
+basePathToMountOrigem=/home/wagner
 
 
 # Esta funcao busca pela linha referente ao nome da tarefa recebida no parametro deste script
@@ -18,28 +19,32 @@ nomeDaTarefa=$1
 # lTaskOrigem
 # lTaskDestino
 # lTaskVer
-function getTaksLineByTaskName(){
+function getTaskLineByTaskName(){
 
     while read line; do
-
         IFS=';'
         read -ra l <<< $line;
         lTaskName=$(echo ${l[0]} | xargs) #trim l[0] string
 
         if [ "$nomeDaTarefa" = "$lTaskName" ];
-        then            
+        then
+            nomeDaTarefaFounded="1"
             lTaskNameSelected=$(echo ${l[0]} | xargs)
             lTaskOrigem=$(echo ${l[1]} | xargs)
             lTaskDestino=$(echo ${l[2]} | xargs)
-            lTaskVer=$(echo ${l[3]} | xargs)
+            lTaskVers=$(echo ${l[3]} | xargs)
         fi
         
     done < ../tarefas-salvas/tarefas.txt
 
     IFS=';'
+
+    echo [getTaskLineByTaskName]nomeDaTarefaFounded $nomeDaTarefaFounded
+    echo [getTaskLineByTaskName]lTaskNameSelected $lTaskNameSelected
+    echo [getTaskLineByTaskName]lTaskOrigem $lTaskOrigem
+    echo [getTaskLineByTaskName]lTaskDestino $lTaskDestino
+    echo [getTaskLineByTaskName]lTaskVer $lTaskVer    
 }
-
-
 
 
 #Funcoes extrai ip e nome da pasta de origem
@@ -52,24 +57,27 @@ function getTaksLineByTaskName(){
 #no servidor onde este script estiver rodando
 #essa pasta montada devera ter o nome 192.168.0.40DocsNSI
 #pra deixar bem claro a qual pasta compartilhada ela esta se referindo
-function extraiIpENomeDaPastaOrigem(){ 	
-	origemRevertida=$(rev <<< $1);		
-	IFS='/' #  (/) is set as delimiter
+function extraiIpENomeDaPastaOrigem(){
+    origemRevertida=$(rev <<< $1);
+    echo $origemRevertida
+    IFS='/' #  (/) is set as delimiter
 
-	read -ra ADDR <<< "$origemRevertida" # origemRevertida is read into an array as tokens separated by IFS
-	ipDeOrigem=$(rev <<< ${ADDR[0]})
-	pastaDeOrigem=$(rev <<< ${ADDR[1]})
-	
-	IFS=' ' # reset to default value after usage
+    read -ra ADDR <<< "$origemRevertida" # origemRevertida is read into an array as tokens separated by IFS
+    ipDeOrigem=$(rev <<< ${ADDR[1]})
+    pastaDeOrigem=$(rev <<< ${ADDR[0]})
+
+    IFS=' ' # reset to default value after usage
+
+    echo [extraiIpENomeDaPastaOrigem] ipDeOrigem $ipDeOrigem
+    echo [extraiIpENomeDaPastaOrigem] pastaDeOrigem $pastaDeOrigem
 }
-
 
 #Todos os backups irao para pasta //192.168.0.150/Backup_IPGG
 #Por isso a gente monta ela em /home/$USER/mnt/mnt150Backup_IPGG
-function montaPastaPadraoDeDestidoDeTodosOsBackups(){
-    mkdir -p "/home/$USER/BACKUPS/mnt150Backup_IPGG"
-    mount -t cifs "//192.168.0.150/Backup_IPGG" "/home/$USER/mnt/mnt150Backup_IPGG" -o username=admin,dom=STORAGEBACKUP,file_mode=0777,dir_mode=0777,vers=2.0
-}
+#function montaPastaPadraoDeDestidoDeTodosOsBackupsmontaPastaPadraoDeDestidoDeTodosOsBackups(){
+#    mkdir -p "/home/$USER/BACKUPS/mnt150Backup_IPGG"
+#    mount -t cifs "//192.168.0.150/Backup_IPGG" "/home/$USER/mnt/mnt150Backup_IPGG" -o username=admin,dom=STORAGEBACKUP,file_mode=0777,dir_mode=0777,vers=2.0
+#}
 
 #Antes de fazer a copia da pasta de origem a agente precisa montar ela
 #ess funcao faz isso, mas pra isso ela quer receber o path para montagem e o shared name da pasta  a ser montada
@@ -77,15 +85,25 @@ function montaPastaPadraoDeDestidoDeTodosOsBackups(){
 function montaPastaDeOrigem(){
     sharedNameDaPastaDeOrigem=$1 #algo do tipo //192.168.0.40/Docs_NSI
     pathDeMontagemParaOrigem=$2 #algo do tipo /home/$USER/mnt/192.168.0.40DocsNSI
-
+    echo "sharedNameDaPastaDeOrigem=$sharedNameDaPastaDeOrigem"
+    echo "pathDeMontagemParaOrigem=$pathDeMontagemParaOrigem"
+    
+    options="username=backup,dom=ipgg,file_mode=0777,dir_mode=0777,vers=$lTaskVers"    
     mkdir -p $pathDeMontagemParaOrigem
-    mount -t cifs $sharedNameDaPastaDeOrigem $pathDeMontagemParaOrigem -o username=backup,dom=ipgg,file_mode=0777,dir_mode=0777,vers=2.0
+    echo [montaPastaDeOrigem] mount -t cifs $sharedNameDaPastaDeOrigem $pathDeMontagemParaOrigem -o $options
+    mount -t cifs $sharedNameDaPastaDeOrigem $pathDeMontagemParaOrigem -o $options
 }
 
 
 
 
-getTaksLineByTaskName
+getTaskLineByTaskName
+if [ $nomeDaTarefaFounded -ne "1" ]; 
+   then
+       echo "??? Tarefa $nomeDaTarefa nao encontrada"
+       exit 1
+fi
+
 #testar se as variaveis foram criadas, caso contrario nao vale a pena continuar
 # a execucao do script
 # lTaskNameSelected
@@ -97,12 +115,16 @@ getTaksLineByTaskName
 # monta a pasta padrao de destino de todos backups
 # as pastas especificas de destino cada backup devem ser criadas
 # dentro dessa pasta padrao mnt150Backup_IPGG
-montaPastaPadraoDeDestidoDeTodosOsBackups 
+#montaPastaPadraoDeDestidoDeTodosOsBackups 
 
+extraiIpENomeDaPastaOrigem $lTaskOrigem # cria as vars  $ipDeOrigem e $pastaDeOrigem
 
-extraiIpENomeDaPastaOrigem # cria as vars  $ipDeOrigem e $pastaDeOrigem
-montaPasta "/home/$USER/mnt/mnt$ipDeOrigem$pastaDeOrigem"
+montaPastaDeOrigem "//$ipDeOrigem/$pastaDeOrigem" "$basePathToMountOrigem/mnt/$pastaDeOrigem"
 
-rsync -va /home/$USER/mnt/mnt$ipDeOrigem$pastaDeOrigem "/home/$USER/mnt/mnt150Backup_IPGG/$ipDeOrigem$pastaDeOrigem"
-
+#rsync -va /home/$USER/mnt/mnt$ipDeOrigem$pastaDeOrigem admin@192.168.0.150:/admin@192.168.0.150:/share/Backup_IPGG/
+echo "->end of execution..."
+echo "->nomeDaTarefa=$nomeDaTarefa"
+echo "->ipDeOrigem=$ipDeOrigem"
+echo "->basePathToMountOrigem=$basePathToMountOrigem"
+echo "->pastaDeOrigem=$pastaDeOrigem"
 
