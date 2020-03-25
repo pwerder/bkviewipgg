@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#needs to
+#install cifs-utils
+#pass ssh public key to remote backup machine
+
 # this script accetp a taskname
 # it will search in ../tarefas-salvas/tarefas.txt for taskname line
 # taskname line founded, use the line data to proceed with specific task
@@ -8,6 +12,12 @@
 # so, runs rsync in the mounted origem to mounted de destino
 
 nomeDaTarefa=$1
+if [ "X$nomeDaTarefa" == "X" ];
+then
+    echo "[ERRO]Passe o nome da tarefa como primeiro parametro, veja arquivo tarefas.txt"
+    exit 1
+fi
+
 nomeDaTarefaFounded=-1
 basePathToMountOrigem=/home/wagner
 
@@ -38,12 +48,6 @@ function getTaskLineByTaskName(){
     done < ../tarefas-salvas/tarefas.txt
 
     IFS=';'
-
-    echo [getTaskLineByTaskName]nomeDaTarefaFounded $nomeDaTarefaFounded
-    echo [getTaskLineByTaskName]lTaskNameSelected $lTaskNameSelected
-    echo [getTaskLineByTaskName]lTaskOrigem $lTaskOrigem
-    echo [getTaskLineByTaskName]lTaskDestino $lTaskDestino
-    echo [getTaskLineByTaskName]lTaskVer $lTaskVer    
 }
 
 
@@ -88,22 +92,23 @@ function montaPastaDeOrigem(){
     echo "sharedNameDaPastaDeOrigem=$sharedNameDaPastaDeOrigem"
     echo "pathDeMontagemParaOrigem=$pathDeMontagemParaOrigem"
     
-    options="username=backup,dom=ipgg,file_mode=0777,dir_mode=0777,vers=$lTaskVers"    
+    options="credentials=$mountCifsCredentialFile,file_mode=0777,dir_mode=0777,vers=$lTaskVers"    
     mkdir -p $pathDeMontagemParaOrigem
     echo [montaPastaDeOrigem] mount -t cifs $sharedNameDaPastaDeOrigem $pathDeMontagemParaOrigem -o $options
-    mount -t cifs $sharedNameDaPastaDeOrigem $pathDeMontagemParaOrigem -o $options
+    echo "nicolas1" | sudo -S mount -t cifs $sharedNameDaPastaDeOrigem $pathDeMontagemParaOrigem -o $options
 }
 
 
 
 
 getTaskLineByTaskName
-if [ $nomeDaTarefaFounded -ne "1" ]; 
+if [ $nomeDaTarefaFounded -ne "1" ] ; 
    then
        echo "??? Tarefa $nomeDaTarefa nao encontrada"
        exit 1
 fi
 
+mountCifsCredentialFile="$(pwd)/domainUserCredentials"
 #testar se as variaveis foram criadas, caso contrario nao vale a pena continuar
 # a execucao do script
 # lTaskNameSelected
@@ -121,10 +126,16 @@ extraiIpENomeDaPastaOrigem $lTaskOrigem # cria as vars  $ipDeOrigem e $pastaDeOr
 
 montaPastaDeOrigem "//$ipDeOrigem/$pastaDeOrigem" "$basePathToMountOrigem/mnt/$pastaDeOrigem"
 
-#rsync -va /home/$USER/mnt/mnt$ipDeOrigem$pastaDeOrigem admin@192.168.0.150:/admin@192.168.0.150:/share/Backup_IPGG/
-echo "->end of execution..."
-echo "->nomeDaTarefa=$nomeDaTarefa"
-echo "->ipDeOrigem=$ipDeOrigem"
-echo "->basePathToMountOrigem=$basePathToMountOrigem"
-echo "->pastaDeOrigem=$pastaDeOrigem"
+
+
+files=$(shopt -s nullglob dotglob; echo $basePathToMountOrigem/mnt/$pastaDeOrigem/*)
+if (( ${#files} ))
+then
+    echo "contains files"
+    echo rsync -va $basePathToMountOrigem/mnt/$pastaDeOrigem admin@192.168.0.150:/admin@192.168.0.150:/share/Backup_IPGG/
+    rsync -ratlzv $basePathToMountOrigem/mnt/$pastaDeOrigem admin@192.168.0.150:/share/Backup_IPGG/
+else 
+  echo "empty (or does not exist or is a file)"
+fi
+
 
