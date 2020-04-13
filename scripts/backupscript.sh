@@ -166,7 +166,7 @@ then
 	echo "[BACKUP] Existem arquivos em em  $basePathToMount_CIFS_Origem/$pastaDeOrigem/"
 	echo "[BACKUP] rsync -ratlzv  $basePathToMount_CIFS_Origem/$pastaDeOrigem admin@192.168.0.150:/share/Backup_IPGG/"
 	echo "[BACKUP] ![$(date)] Inicio Backup $basePathToMount_CIFS_Origem/$pastaDeOrigem" >> $HOME/backupserver.log
-	rsync -ratlzv $basePathToMount_CIFS_Origem/$pastaDeOrigem admin@192.168.0.150:/share/Backup_IPGG/
+	rsync -ratlz $basePathToMount_CIFS_Origem/$pastaDeOrigem admin@192.168.0.150:/share/Backup_IPGG/
 	echo "[BACKUP] ![$(date)] Terminou Backup $basePathToMount_CIFS_Origem/$pastaDeOrigem" >> $HOME/backupserver.log
     fi;
 else 
