@@ -110,8 +110,18 @@ function montaPastaDeOrigem(){
     
     options="credentials=$mountCifsCredentialFile,file_mode=0777,dir_mode=0777,vers=$lTaskVers"    
     mkdir -p $pathDeMontagemParaOrigem
-    echo "[BACKUP] Debug: mount -t cifs  $sharedNameDaPastaDeOrigem  $pathDeMontagemParaOrigem -o $options"
-    echo "sessp@ipgg" | sudo -S mount -t cifs $sharedNameDaPastaDeOrigem $pathDeMontagemParaOrigem -o $options
+
+    #se a pasta de origem ja estiver montada nao precisa montar de novo
+    origemIsMounted=$(mount | grep "$sharedNameDaPastaDeOrigem on $pathDeMontagemParaOrigem type cifs" | wc | awk '{print $1}')
+
+    if [ $origemIsMounted == "1" ];
+    then
+	echo "[BACKUP] Nao foi preciso montar a origem pois ja estava montada"
+	return
+    else
+	echo "[BACKUP] Debug: mount -t cifs  $sharedNameDaPastaDeOrigem  $pathDeMontagemParaOrigem -o $options"
+	echo "sessp@ipgg" | sudo -S mount -t cifs $sharedNameDaPastaDeOrigem $pathDeMontagemParaOrigem -o $options
+    fi
 }
 
 
@@ -144,22 +154,23 @@ montaPastaDeOrigem "//$ipDeOrigem/$pastaDeOrigem" "$basePathToMount_CIFS_Origem/
 
 
 
-files=$(shopt -s nullglob dotglob; echo $basePathToMountOrigem/$pastaDeOrigem/*)
+files=$(shopt -s nullglob dotglob; echo $basePathToMount_CIFS_Origem/$pastaDeOrigem/*)
 if (( ${#files} ))
 then
     echo "[BACKUP] Existem arquivos a serem backapeados em $pastaDeOrigem"
-    if [ "X$pastaDeOrigem" == "X" ]
-    	then
-	    echo "[BACKUP] Err 5 pastaDeOrigem com valor : $pastaDeOrigem"
-	    exit 5
-    	else
-	    echo "[BACKUP] rsync -va $basePathToMountOrigem/$pastaDeOrigem admin@192.168.0.150:/share/Backup_IPGG/"
-	    echo "[BACKUP] ![$(date)] Inicio Backup $basePathToMountOrigem/$pastaDeOrigem" >> $HOME/backupserver.log
-	    #rsync -ratlzv $basePathToMountOrigem/$pastaDeOrigem admin@192.168.0.150:/share/Backup_IPGG/
-	    echo "[BACKUP] ![$(date)] Terminou Backup $basePathToMountOrigem/$pastaDeOrigem" >> $HOME/backupserver.log
+    if [ "X$pastaDeOrigem" == "X" ];
+    then
+	echo "[BACKUP] Err 5 pastaDeOrigem com valor : $pastaDeOrigem"
+	exit 5
+    else
+	echo "[BACKUP] Existem arquivos em em  $basePathToMount_CIFS_Origem/$pastaDeOrigem/"
+	echo "[BACKUP] rsync -ratlzv  $basePathToMount_CIFS_Origem/$pastaDeOrigem admin@192.168.0.150:/share/Backup_IPGG/"
+	echo "[BACKUP] ![$(date)] Inicio Backup $basePathToMount_CIFS_Origem/$pastaDeOrigem" >> $HOME/backupserver.log
+	rsync -ratlzv $basePathToMount_CIFS_Origem/$pastaDeOrigem admin@192.168.0.150:/share/Backup_IPGG/
+	echo "[BACKUP] ![$(date)] Terminou Backup $basePathToMount_CIFS_Origem/$pastaDeOrigem" >> $HOME/backupserver.log
     fi;
 else 
-  echo "empty (or does not exist or is a file)"
+    echo "[BACKUP] Nao ha arqs em  $basePathToMount_CIFS_Origem/$pastaDeOrigem/, a pasta esta vazia"
 fi
 
 
