@@ -15,7 +15,9 @@
   https://trello.com/b/SBfVYPvP/bakcupipggbkviewipgg
 
   
-  
+DEPENDENCIAS:
+cliente do mysql 
+cliente do postgresql
   
 
   

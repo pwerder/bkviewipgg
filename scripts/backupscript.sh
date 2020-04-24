@@ -15,6 +15,8 @@ BASEDIR=$(dirname "$0")
 cd $BASEDIR
 echo "[Backup] Info: Workdir = $(pwd)"
 
+filePathToEmitLogs=/home/administrador/cron.log
+
 nomeDaTarefa=$1
 if [ "X$nomeDaTarefa" == "X" ];
 then
@@ -163,14 +165,16 @@ then
 	echo "[BACKUP] Err 5 pastaDeOrigem com valor : $pastaDeOrigem"
 	exit 5
     else
-	echo "[BACKUP] Existem arquivos em em  $basePathToMount_CIFS_Origem/$pastaDeOrigem/"
-	echo "[BACKUP] rsync -ratlzv  $basePathToMount_CIFS_Origem/$pastaDeOrigem admin@192.168.0.150:/share/Backup_IPGG/"
-	echo "[BACKUP] ![$(date)] Inicio Backup $basePathToMount_CIFS_Origem/$pastaDeOrigem" >> $HOME/backupserver.log
-	rsync -ratlz $basePathToMount_CIFS_Origem/$pastaDeOrigem admin@192.168.0.150:/share/Backup_IPGG/
-	echo "[BACKUP] ![$(date)] Terminou Backup $basePathToMount_CIFS_Origem/$pastaDeOrigem" >> $HOME/backupserver.log
+	echo [BACKUP] Existem arquivos em em  $basePathToMount_CIFS_Origem/$pastaDeOrigem/
+	echo [BACKUP] rsync -ratlzv  $basePathToMount_CIFS_Origem/$pastaDeOrigem admin@192.168.0.150:/share/Backup_IPGG/
+	echo [BACKUP] [$(date +"%D %T")] Inicio Backup $basePathToMount_CIFS_Origem/$pastaDeOrigem >> $HOME/backupserver.log
+	echo [BACKUP] [$(date +"%D %T")] Starting to backing up $basePathToMount_CIFS_Origem/$pastaDeOrigem >> $filePathToEmitLogs
+	rsync -ratlzv $basePathToMount_CIFS_Origem/$pastaDeOrigem admin@192.168.0.150:/share/Backup_IPGG/
+	echo [BACKUP] [$(date +"%D %T")] Finished to backup up $basePathToMount_CIFS_Origem/$pastaDeOrigem >> $filePathToEmitLogs
+	echo [BACKUP] [$(date) +"%D %T"] Terminou Backup $basePathToMount_CIFS_Origem/$pastaDeOrigem >> $HOME/backupserver.log
     fi;
 else 
     echo "[BACKUP] Nao ha arqs em  $basePathToMount_CIFS_Origem/$pastaDeOrigem/, a pasta esta vazia"
-fi
+fi;
 
 

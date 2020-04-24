@@ -1,8 +1,8 @@
-bk-docs-rh-40             ; //192.168.0.40/DOCS_RH         ; //192.168.0.150/Backups_IPGG ; 2.0
-bk-Docs_Compras-40        ; //192.168.0.40/Docs_Compras    ; //192.168.0.150/Backups_IPGG ; 2.0
-bk-docs-gpi-40            ; //192.168.0.40/DOCS_GPI        ; //192.168.0.150/Backups_IPGG ; 2.0
-bk-docs-cid-40            ; //192.168.0.40/DOCS_CID        ; //192.168.0.150/Backups_IPGG ; 2.0
-bk-docs-odonto-40         ; //192.168.0.40/Docs_Odonto     ; //192.168.0.150/Backups_IPGG ; 2.0
-bk-docs-biblioteca-40     ; //192.168.0.80/Docs_Biblioteca ; //192.168.0.150/Backups_IPGG ; 2.0
-bk-docs-IPGG-AltoCusto-80 ; //192.168.0.80/IPGG-AltoCusto  ; //192.168.0.150/Backups_IPGG ; 1.0
-bk-docs-rh-40 
+bk-docs-rh-40                 ; //192.168.0.40/DOCS_RH                 ; //192.168.0.150/Backups_IPGG ; 2.0
+bk-Docs_Compras-40            ; //192.168.0.40/Docs_Compras            ; //192.168.0.150/Backups_IPGG ; 2.0
+bk-docs-gpi-40                ; //192.168.0.40/DOCS_GPI                ; //192.168.0.150/Backups_IPGG ; 2.0
+bk-docs-cid-40                ; //192.168.0.40/DOCS_CID                ; //192.168.0.150/Backups_IPGG ; 2.0
+bk-docs-odonto-40             ; //192.168.0.40/Docs_Odonto             ; //192.168.0.150/Backups_IPGG ; 2.0
+bk-docs-biblioteca-40         ; //192.168.0.80/Docs_Biblioteca         ; //192.168.0.150/Backups_IPGG ; 2.0
+bk-docs-IPGG-AltoCusto-80     ; //192.168.0.80/IPGG-AltoCusto          ; //192.168.0.150/Backups_IPGG ; 1.0
+bk-docs-central-de-acesso-40  ; //192.168.0.40/Docs_Central_de_Acesso  ; //192.168.0.150/Backups_IPGG ; 2.0
