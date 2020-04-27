@@ -4,10 +4,31 @@
         <meta charset="UTF-8">
         <title>Backup do IPGG</title>
         <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="main.css">   
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"">
+        <link rel="stylesheet" href="css/main.css">   
     </head>
     
     <body>
+        <!--Navegaçao-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">
+                <img src="img/ipgg-logo.png" width="20">
+            </a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="http://192.168.0.143" target="_blank">Intranet</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="http://192.168.0.143/nsi-links-internos/" target="_blank">NSI</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="https://github.com/pwerder/bkviewipgg" target="_blank">GitHub</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
         <form id="app">
             <h1>Cadastramento da Rotina de Backup</h1>
             <p>Nome da tarefa:</p>
@@ -18,8 +39,6 @@
             
             <p>Destino</p>
             <input type="text" id="destino" placeholder="Destino do Backup">
-            
-
             
             <button>Salvar</button>
         </form>

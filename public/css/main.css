@@ -10,7 +10,7 @@ body, html {
 }
 
 body {
-    background: url(./img/ipgg.png) no-repeat center top fixed;
+    background: url(../img/ipgg.png) no-repeat center top fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
